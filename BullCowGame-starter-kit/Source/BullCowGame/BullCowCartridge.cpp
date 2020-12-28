@@ -23,7 +23,7 @@ void UBullCowCartridge::OnInput(const FString &Input) // When the player hits en
 	}
 	else
 	{
-		ProcessGuess(Input, lives);
+		ProcessGuess(Input);
 	}
 }
 
@@ -32,15 +32,16 @@ void UBullCowCartridge::SetupGame()
 	PrintLine(TEXT("Welcome to the Bull Cows!"));
 
 	HiddenWord = TEXT("cakes");
-	lives = HiddenWord.Len();
+	Lives = HiddenWord.Len();
 	bGameOver = false;
 
 	PrintLine(TEXT("Guess the %d letter word!"), HiddenWord.Len());
-	PrintLine(TEXT("You have %d Lives"), lives);
+	PrintLine(TEXT("You have %d Lives"), Lives);
 	PrintLine(TEXT("Type in your guess \nand press enter to continue..."));
 
-	const TCHAR HW[] = TEXT("cakes");
-	HW;
+	const TCHAR HW[] = TEXT("plums");
+	PrintLine(TEXT("Character 1 of the hidden word is: %c"), HiddenWord[0]);
+	PrintLine(TEXT("The 4th character of HW is: %c"), HW[3]);
 }
 
 void UBullCowCartridge::EndGame()
@@ -49,7 +50,7 @@ void UBullCowCartridge::EndGame()
 	PrintLine(TEXT("Press enter to play again."));
 }
 
-void UBullCowCartridge::ProcessGuess(FString Guess, int32 Counter)
+void UBullCowCartridge::ProcessGuess(FString Guess)
 {
 	if (Guess == HiddenWord)
 	{
@@ -57,24 +58,24 @@ void UBullCowCartridge::ProcessGuess(FString Guess, int32 Counter)
 		EndGame();
 		return;
 	}
-
-	/*if(!bIsogram)
-	{
-		PrintLine(TEXT("No repeating letters, guess again!"));
-	}*/
 	
 	if (Guess.Len() != HiddenWord.Len())
 	{
 		PrintLine(TEXT("The hidden word is %d letters long"), HiddenWord.Len());
-		PrintLine(TEXT("Sorry, try guessing again! \nYou have %d lives remaining"), lives);
+		PrintLine(TEXT("Sorry, try guessing again! \nYou have %d lives remaining"), Lives);
 		return;
 	}
-
+	
+	if(!IsIsogram(Guess))
+	{
+		PrintLine(TEXT("No repeating letters, guess again!"));
+		return;
+	}
 	
 	PrintLine(TEXT("Lost a life!"));
-	--lives;
+	--Lives;
 
-	if (0 >= lives)
+	if (0 >= Lives)
 	{
 		ClearScreen();
 		PrintLine(TEXT("You have no lives left!"));
@@ -83,5 +84,10 @@ void UBullCowCartridge::ProcessGuess(FString Guess, int32 Counter)
 		return;
 	}
 
-	PrintLine(TEXT("Guess again, you have %d lives left."), lives);
+	PrintLine(TEXT("Guess again, you have %d lives left."), Lives);
+}
+
+bool UBullCowCartridge::IsIsogram(FString Word) const
+{
+	return true;
 }

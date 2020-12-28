@@ -1,3 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/BullCowGame-starter-kit/_ReSharper.Caches/ReSharperPlatformVs16203_99fd53e7.BullCowGame.00
+/BullCowGame-starter-kit/_ReSharper.Caches/ReSharperPlatformVs16203_99fd53e7.BullCowGame.01
+
 # Visual Studio Code
 .vscode
 *.code-workspace
