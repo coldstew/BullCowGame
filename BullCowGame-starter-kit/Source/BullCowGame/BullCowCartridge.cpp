@@ -42,6 +42,8 @@ void UBullCowCartridge::SetupGame()
 	const TCHAR HW[] = TEXT("plums");
 	PrintLine(TEXT("Character 1 of the hidden word is: %c"), HiddenWord[0]);
 	PrintLine(TEXT("The 4th character of HW is: %c"), HW[3]);
+
+	IsIsogram(HiddenWord);
 }
 
 void UBullCowCartridge::EndGame()
@@ -89,5 +91,25 @@ void UBullCowCartridge::ProcessGuess(FString Guess)
 
 bool UBullCowCartridge::IsIsogram(FString Word) const
 {
+	for (int32 Index = 0; Index < Word.Len(); ++Index)
+	{
+		for (int32 Comparison = Index + 1; Comparison < Word.Len(); ++Comparison)
+		{
+			if (Word[Index] == Word[Comparison])
+			{
+				return false;
+			}
+		}
+	}
+	
+	// for (int32 i = 0, Comparison = i + 1; Comparison < Word.Len(); ++Comparison)
+	// {
+	// 	if (Word[i] == Word[Comparison])
+	// 	{
+	// 		return false;
+	// 	}
+	// }
+	
+
 	return true;
 }
